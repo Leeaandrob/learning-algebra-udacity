@@ -1,5 +1,6 @@
 # coding: utf-8
 from array import array
+from math import sqrt
 
 
 class Vector(object):
@@ -25,10 +26,19 @@ class Vector(object):
         return self.coordinates[position]
 
     def __add__(self, other):
-        return list(map(lambda x, y: round(x+y, 3), self.coordinates, other))
+        return Vector(list(map(lambda x, y: round(x+y, 3),
+                               self.coordinates, other)))
 
     def __sub__(self, other):
-        return list(map(lambda x, y: round(x-y, 3), self.coordinates, other))
+        return Vector(list(map(lambda x, y: round(x-y, 3),
+                               self.coordinates, other)))
 
     def __mul__(self, scalar):
         return Vector([round(scalar * x, 3) for x in self.coordinates])
+
+    def __mag__(self):
+        return round(sqrt(sum(pow(float(i), 2) for i in self)), 3)
+
+    def __normalize__(self):
+        mag = 1 / round(sqrt(sum(pow(float(i), 2) for i in self)), 3)
+        return Vector([round(mag * x, 3) for x in self])
